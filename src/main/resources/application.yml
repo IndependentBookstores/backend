@@ -1,0 +1,19 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://book-db.cazfczinezy4.ap-northeast-2.rds.amazonaws.com/book_db?serverTimezone=Asia/Seoul
+    username: root
+    password: dlscks12
+  jpa:
+    open-in-view: false
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate.format_sql: true
+  profiles:
+    include: aws
+  servlet:
+    multipart:
+      max-file-size: 2GB
+      max-request-size: 2GB
