@@ -1,16 +1,14 @@
 package com.example.bookstore.domain;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -44,5 +42,5 @@ public class Board extends BaseTimeEntity {
     private List<Reply> replies = new ArrayList<>();
 
     @OneToMany(mappedBy = "board")
-    private List<Like> likes = new ArrayList<>();
+    private List<Heart> hearts = new ArrayList<>();
 }
