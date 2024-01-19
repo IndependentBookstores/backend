@@ -8,9 +8,7 @@ import java.util.List;
 
 @Entity
 @Getter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class BookStore {
 
     @Id
@@ -46,6 +44,9 @@ public class BookStore {
     private String instagramId;
 
     private String instagramLink;
+
+    @Column(name = "book_store_image")
+    private String image;
 
     @OneToMany(mappedBy = "bookStore")
     private List<Blog> blogs = new ArrayList<>();

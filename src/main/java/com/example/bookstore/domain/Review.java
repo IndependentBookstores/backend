@@ -5,10 +5,7 @@ import lombok.*;
 
 @Entity
 @Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Review extends BaseTimeEntity {
 
     @Id
@@ -19,8 +16,6 @@ public class Review extends BaseTimeEntity {
     @Column(name = "review_content")
     private String content;
 
-    private int star;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
@@ -29,5 +24,10 @@ public class Review extends BaseTimeEntity {
     @JoinColumn(name = "book_store_id")
     private BookStore bookStore;
 
-
+    @Builder
+    public Review(String content, User user, BookStore bookStore) {
+        this.content = content;
+        this.user = user;
+        this.bookStore = bookStore;
+    }
 }

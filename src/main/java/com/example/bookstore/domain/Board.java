@@ -8,10 +8,7 @@ import java.util.List;
 
 @Entity
 @Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Board extends BaseTimeEntity {
 
     @Id
@@ -25,22 +22,31 @@ public class Board extends BaseTimeEntity {
     @Column(name = "board_content")
     private String content;
 
-    private String writer;
-
     @Column(name = "board_image")
     private String image;
 
-    private String likeCount;
+    private int likeCount;
 
-    private String replyCount;
+    private int replyCount;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "board")
+    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
     private List<Reply> replies = new ArrayList<>();
 
-    @OneToMany(mappedBy = "board")
+    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
     private List<Heart> hearts = new ArrayList<>();
+
+    @Builder
+    public Board(Long id, String title, String content, String image, int likeCount, int replyCount, User user) {
+        this.id = id;
+        this.title = title;
+        this.content = content;
+        this.image = image;
+        this.likeCount = likeCount;
+        this.replyCount = replyCount;
+        this.user = user;
+    }
 }

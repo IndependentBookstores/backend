@@ -1,7 +1,6 @@
 package com.example.bookstore.controller;
 
-import com.example.bookstore.domain.BookStore;
-import com.example.bookstore.dto.BookStoreDto;
+import com.example.bookstore.dto.BookStoreDetailDto;
 import com.example.bookstore.payload.ApiResponse;
 import com.example.bookstore.service.BookStoreService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -12,8 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -27,11 +24,10 @@ public class BookStoreController {
     public ResponseEntity<ApiResponse> getBookStore(@RequestParam("bookStoreId") Long bookStoreId) {
         log.info("getBookStore 입장!!");
         try {
-//            ResponseEntity.notFound();
-            BookStoreDto bookStore = bookStoreService.getBookStore(bookStoreId);
+            BookStoreDetailDto bookStore = bookStoreService.getBookStore(bookStoreId);
             ObjectMapper mapper = new ObjectMapper();
-            log.info("getBookStore 있음!!");
-            return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Created", "서점 정보를 가져오는데 성공", mapper.writeValueAsString(bookStore)));
+            log.info("bookstore={}", mapper.writeValueAsString(bookStore));
+            return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Created", "서점 정보를 가져오는데 성공", bookStore));
         } catch (Exception e) {
             System.out.println("getBookStore 없음!!");
             log.error("e={}", e);

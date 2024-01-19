@@ -17,11 +17,7 @@ public class ApiResponse {
     public ApiResponse(String status, String message, Object data) {
         this.status = status;
         this.message = message;
-        System.out.println(data);
         ObjectMapper mapper = new ObjectMapper();
-
-//        JSONParser jsonParser = new JSONParser();
-//        (JSONObject) jsonParser.parse(data);
         try {
             this.data = mapper.writeValueAsString(data);
         } catch (JsonProcessingException e) {

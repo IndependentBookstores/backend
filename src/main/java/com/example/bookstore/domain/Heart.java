@@ -5,10 +5,7 @@ import lombok.*;
 
 @Entity
 @Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Heart {
 
     @Id
@@ -24,5 +21,9 @@ public class Heart {
     @JoinColumn(name = "board_id")
     private Board board;
 
-
+    @Builder
+    public Heart(User user, Board board) {
+        this.user = user;
+        this.board = board;
+    }
 }
