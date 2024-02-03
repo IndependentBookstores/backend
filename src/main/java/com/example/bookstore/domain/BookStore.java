@@ -54,5 +54,23 @@ public class BookStore {
     @OneToMany(mappedBy = "bookStore")
     private List<Review> reviews = new ArrayList<>();
 
-
+    @Builder
+    public BookStore(Long id, String name, String category, String address, String latitude, String longitude, String workdayTime, String satTime, String sunTime, String rest, String tel, String optionExplain, String additionalExplain, String instagramId, String instagramLink, String image) {
+        this.id = id;
+        this.name = name;
+        this.category = category;
+        this.address = address;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.workdayTime = workdayTime;
+        this.satTime = satTime;
+        this.sunTime = sunTime;
+        this.rest = rest;
+        this.tel = tel;
+        this.optionExplain = optionExplain;
+        this.additionalExplain = additionalExplain;
+        this.instagramId = instagramId;
+        this.instagramLink = instagramLink;
+        this.image = image;
+    }
 }

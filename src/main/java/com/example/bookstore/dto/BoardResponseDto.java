@@ -1,9 +1,13 @@
 package com.example.bookstore.dto;
 
+import com.example.bookstore.domain.BaseTimeEntity;
 import com.example.bookstore.domain.Board;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -21,6 +25,10 @@ public class BoardResponseDto {
 
     private int likeCount;
 
+    private String createdDate;
+
+    private String modifiedDate;
+
     private int replyCount;
 
     private Long userId;
@@ -34,6 +42,8 @@ public class BoardResponseDto {
         this.content = board.getContent();
         this.image = board.getImage();
         this.likeCount = board.getLikeCount();
+        this.createdDate = board.getCreatedDate();
+        this.modifiedDate = board.getModifiedDate();
         this.replyCount = board.getReplyCount();
         this.userId = board.getUser().getId();
         this.nickname = board.getUser().getNickname();

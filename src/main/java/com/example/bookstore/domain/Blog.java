@@ -35,4 +35,15 @@ public class Blog {
     @JoinColumn(name = "book_store_id")
     private BookStore bookStore;
 
+    @Builder
+    public Blog(Long id, String title, String content, String link, String author, String name, String date) {
+        this.id = id;
+        this.title = title;
+        this.content = content;
+        this.link = link;
+        this.author = author;
+        this.name = name;
+        this.date = date;
+    }
+
 }

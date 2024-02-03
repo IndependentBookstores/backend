@@ -1,15 +1,14 @@
 package com.example.bookstore.dto;
 
-import com.example.bookstore.domain.Blog;
 import com.example.bookstore.domain.BookStore;
-import com.example.bookstore.domain.Review;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class BookStoreDetailDto {
 
@@ -20,10 +19,6 @@ public class BookStoreDetailDto {
     private String category;
 
     private String address;
-
-    private String latitude;
-
-    private String longitude;
 
     private String workdayTime;
 
@@ -45,15 +40,13 @@ public class BookStoreDetailDto {
 
     private List<BlogDto> blogDtos = new ArrayList<>();
 
-    private List<ReviewDto> reviewDtos = new ArrayList<>();
+    private List<ReviewResponseDto> reviewDtos = new ArrayList<>();
 
-    public BookStoreDetailDto(BookStore bookStore, List<Blog> blogs, List<Review> reviews) {
+    public BookStoreDetailDto(BookStore bookStore) {
         this.id = bookStore.getId();
         this.name = bookStore.getName();
         this.category = bookStore.getCategory();
         this.address = bookStore.getAddress();
-        this.latitude = bookStore.getLatitude();
-        this.longitude = bookStore.getLongitude();
         this.workdayTime = bookStore.getWorkdayTime();
         this.satTime = bookStore.getSatTime();
         this.sunTime = bookStore.getSunTime();
@@ -64,30 +57,30 @@ public class BookStoreDetailDto {
         this.instagramId = bookStore.getInstagramId();
         this.instagramLink = bookStore.getInstagramLink();
 
-        for (int i = 0; i < blogs.size(); i++) {
-            Blog blog = blogs.get(i);
-            BlogDto blogDto = new BlogDto();
-
-            blogDto.setTitle(blog.getTitle());
-            blogDto.setContent(blog.getContent());
-            blogDto.setLink(blog.getLink());
-            blogDto.setAuthor(blog.getAuthor());
-            blogDto.setName(blog.getName());
-            blogDto.setDate(blog.getDate());
-
-            blogDtos.add(blogDto);
-        }
-
-        for (int i = 0; i < reviews.size(); i++) {
-            Review review = reviews.get(i);
-            ReviewDto reviewDto = new ReviewDto();
-
-            reviewDto.setContent(review.getContent());
-            reviewDto.setProfile_image(review.getUser().getProfileImage());
-            reviewDto.setNickname(review.getUser().getNickname());
-
-            reviewDtos.add(reviewDto);
-        }
-
+//        for (int i = 0; i < blogs.size(); i++) {
+//            Blog blog = blogs.get(i);
+//            BlogDto blogDto = new BlogDto();
+//
+//            blogDto.setTitle(blog.getTitle());
+//            blogDto.setContent(blog.getContent());
+//            blogDto.setLink(blog.getLink());
+//            blogDto.setAuthor(blog.getAuthor());
+//            blogDto.setName(blog.getName());
+//            blogDto.setDate(blog.getDate());
+//
+//            blogDtos.add(blogDto);
+//        }
+//
+//        for (int i = 0; i < reviews.size(); i++) {
+//            Review review = reviews.get(i);
+//            ReviewDto reviewDto = new ReviewDto();
+//
+//            reviewDto.setContent(review.getContent());
+//            reviewDto.setProfile_image(review.getUser().getProfileImage());
+//            reviewDto.setNickname(review.getUser().getNickname());
+//
+//            reviewDtos.add(reviewDto);
+//        }
+//
     }
 }

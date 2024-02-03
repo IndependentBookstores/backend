@@ -32,8 +32,6 @@ public class BoardController {
         log.info("글 생성 입장!!");
         try {
             Long save = boardService.save(boardRequestDto, image);
-            ObjectMapper mapper = new ObjectMapper();
-            log.info("bookstore={}", mapper.writeValueAsString(save));
             return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Created", "글 생성 성공", save));
         } catch (Exception e) {
             log.error("e={}", e);
