@@ -6,6 +6,7 @@ import com.example.bookstore.domain.Review;
 import com.example.bookstore.dto.AroundBookStoreDto;
 import com.example.bookstore.dto.BookStoreDetailDto;
 import com.example.bookstore.dto.BookStoreResponseDto;
+import com.example.bookstore.dto.MapBookStoreDto;
 import com.example.bookstore.repository.BlogRepository;
 import com.example.bookstore.repository.BookStoreRepository;
 import com.example.bookstore.repository.ReviewRepository;
@@ -38,7 +39,16 @@ public class BookStoreService {
         return new BookStoreDetailDto(bookStore);
     }
 
-    //주변 서점 3개 보여주기
+    //주변 서점 리스트 보여주기
+    public List<MapBookStoreDto> getMapBookStore(String latitude, String longitude, int distance) {
+        BigDecimal decimalLat = new BigDecimal(latitude);
+        BigDecimal decimalLong = new BigDecimal(longitude);
+
+        List<BookStore> mapBookStore = bookStoreRepository.getMapBookStore(decimalLat, decimalLong, distance);
+        return mapBookStore.stream().map(MapBookStoreDto::new).collect(Collectors.toList());
+    }
+
+    //지도 마커 서점 리스트
     public List<AroundBookStoreDto> getAroundBookStore(String latitude, String longitude) {
         BigDecimal decimalLat = new BigDecimal(latitude);
         BigDecimal decimalLong = new BigDecimal(longitude);

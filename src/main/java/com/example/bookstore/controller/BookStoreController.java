@@ -4,6 +4,7 @@ import com.example.bookstore.domain.BookStore;
 import com.example.bookstore.dto.AroundBookStoreDto;
 import com.example.bookstore.dto.BookStoreDetailDto;
 import com.example.bookstore.dto.BookStoreResponseDto;
+import com.example.bookstore.dto.MapBookStoreDto;
 import com.example.bookstore.payload.ApiResponse;
 import com.example.bookstore.service.BookStoreService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -39,7 +40,20 @@ public class BookStoreController {
         }
     }
 
-    //주변 서점 3개 보여주기
+    //지도 마커 서점 리스트
+    @GetMapping("/book-store/map")
+    public ResponseEntity<ApiResponse> getAroundBookStore(@RequestParam String latitude, @RequestParam String longitude, @RequestParam int distance) {
+        log.info("getAroundBookStore 입장!!");
+        try {
+            List<MapBookStoreDto> mapBookStore = bookStoreService.getMapBookStore(latitude, longitude, distance);
+            return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Created", distance + "km 거리의 " + "지도 마커 서점 리스트 " + mapBookStore.size() + "개 정보를 가져오는데 성공", mapBookStore));
+        } catch (Exception e) {
+            log.error("e={}", e);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponse("NotFound", "지도 마커 서점 리스트를 가져오는데 실패", null));
+        }
+    }
+
+    //주변 서점 리스트 보여주기
     @GetMapping("/book-store/around")
     public ResponseEntity<ApiResponse> getAroundBookStore(@RequestParam String latitude, @RequestParam String longitude) {
         log.info("getAroundBookStore 입장!!");
