@@ -22,14 +22,21 @@ public class UserDto {
 
     private String profileImage;
 
-    public User toEntity() {
+    public User toEntity(String image) {
         return User.builder()
                 .id(id)
                 .nickname(nickname)
                 .age(age)
                 .category(category)
-                .profileImage(profileImage)
+                .profileImage(image)
                 .build();
     }
-    
+
+    public UserDto(User user) {
+        this.id = user.getId();
+        this.nickname = user.getNickname();
+        this.age = user.getAge();
+        this.category = user.getCategory();
+        this.profileImage = user.getProfileImage();
+    }
 }
