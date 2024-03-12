@@ -14,6 +14,8 @@ public class ReviewRequestDto {
 
     private String content;
 
+//    private String image;
+
     private Long userId;
 
     private Long bookStoreId;

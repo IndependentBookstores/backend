@@ -6,6 +6,7 @@ import jakarta.persistence.Id;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -22,13 +23,13 @@ public class UserDto {
 
     private String profileImage;
 
-    public User toEntity(String image) {
+    public User toEntity() {
         return User.builder()
                 .id(id)
                 .nickname(nickname)
                 .age(age)
                 .category(category)
-                .profileImage(image)
+                .profileImage(profileImage)
                 .build();
     }
 

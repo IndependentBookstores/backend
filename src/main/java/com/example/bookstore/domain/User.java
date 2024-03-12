@@ -1,5 +1,6 @@
 package com.example.bookstore.domain;
 
+import com.example.bookstore.dto.UserDto;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -42,5 +43,13 @@ public class User {
         this.age = age;
         this.category = category;
         this.profileImage = profileImage;
+    }
+
+    //유저 수정
+    public void updateUser(UserDto userDto) {
+        this.nickname = userDto.getNickname();
+        this.age = userDto.getAge();
+        this.category = userDto.getCategory();
+        this.profileImage = userDto.getProfileImage();
     }
 }

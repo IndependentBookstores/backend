@@ -28,12 +28,12 @@ public class BoardRequestDto {
     private int replyCount;
 
     private Long userId;
-    public Board toEntity(String imageUrl) {
+    public Board toEntity() {
         User user = User.builder().id(userId).build();
         return Board.builder()
                 .title(title)
                 .content(content)
-                .image(imageUrl)
+                .image(image)
                 .likeCount(likeCount)
                 .replyCount(replyCount)
                 .user(user)

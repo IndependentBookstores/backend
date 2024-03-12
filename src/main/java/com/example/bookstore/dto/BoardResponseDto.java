@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -32,7 +33,7 @@ public class BoardResponseDto {
     private int replyCount;
 
     private Long userId;
-
+    
     //유저 정보
     private String nickname;
 

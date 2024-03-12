@@ -51,4 +51,5 @@ public class HeartService {
         Heart heart = heartRepository.findByUserAndBoard(user, board).orElseThrow(() -> new NotFoundException("좋아요를 찾을 수 없습니다"));
         heartRepository.delete(heart);
     }
+
 }

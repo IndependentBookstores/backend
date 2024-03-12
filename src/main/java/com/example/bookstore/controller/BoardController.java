@@ -1,9 +1,7 @@
 package com.example.bookstore.controller;
 
 import com.example.bookstore.domain.Board;
-import com.example.bookstore.dto.BoardRequestDto;
-import com.example.bookstore.dto.BoardResponseDto;
-import com.example.bookstore.dto.BookStoreDetailDto;
+import com.example.bookstore.dto.*;
 import com.example.bookstore.payload.ApiResponse;
 import com.example.bookstore.service.AmazonS3Service;
 import com.example.bookstore.service.BoardService;
@@ -27,15 +25,28 @@ public class BoardController {
     private final BoardService boardService;
 
     //글 생성
-    @PostMapping(value = "/board", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity<ApiResponse> save(@RequestPart BoardRequestDto boardRequestDto, @RequestPart MultipartFile image) {
+    @PostMapping("/board")
+    public ResponseEntity<ApiResponse> save(@RequestBody BoardRequestDto boardRequestDto) {
         log.info("글 생성 입장!!");
         try {
-            Long save = boardService.save(boardRequestDto, image);
+            Long save = boardService.save(boardRequestDto);
             return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Created", "글 생성 성공", save));
         } catch (Exception e) {
             log.error("e={}", e);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponse("NotFound", "글 생성 실패", null));
+        }
+    }
+
+    //글 수정
+    @PutMapping("/board/{id}/update")
+    public ResponseEntity<ApiResponse> save(@PathVariable("id") Long boardId, @RequestBody BoardRequestDto boardRequestDto) {
+        log.info("글 생성 입장!!");
+        try {
+            Long update = boardService.update(boardId, boardRequestDto);
+            return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Created", "글 수정 성공", update));
+        } catch (Exception e) {
+            log.error("e={}", e);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponse("NotFound", "글 수정 실패", null));
         }
     }
 
@@ -64,6 +75,33 @@ public class BoardController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponse("NotFound", "선택한 글 조회 실패", null));
         }
     }
+
+    //인기 글 조회(일주일 이내 작성 글, 3개)
+    @GetMapping("/board/best")
+    public ResponseEntity<ApiResponse> bestBoards() {
+        log.info("인기 글 조회 입장!!");
+        try {
+            List<BestBoardDto> bestBoards = boardService.bestBoards();
+            return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Created", "인기 글 조회 성공", bestBoards));
+        } catch (Exception e) {
+            log.error("e={}", e);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponse("NotFound", "인기 글 조회 실패", null));
+        }
+    }
+
+    //좋아요 누른 글 조회
+    @GetMapping("/board/heart")
+    public ResponseEntity<ApiResponse> heartBoards(@RequestParam("id") Long userId) {
+        log.info("좋아요 누른 글 조회 입장!!");
+        try {
+            List<HeartBoardDto> heartBoards = boardService.heartBoards(userId);
+            return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Created", "좋아요 누른 글 조회 성공", heartBoards));
+        } catch (Exception e) {
+            log.error("e={}", e);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponse("NotFound", "좋아요 누른 글 조회 실패", null));
+        }
+    }
+
 
 
 }

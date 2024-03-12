@@ -1,5 +1,6 @@
 package com.example.bookstore.domain;
 
+import com.example.bookstore.dto.BoardRequestDto;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -48,5 +49,12 @@ public class Board extends BaseTimeEntity {
         this.likeCount = likeCount;
         this.replyCount = replyCount;
         this.user = user;
+    }
+
+    //글 수정
+    public void updateBoard(BoardRequestDto boardRequestDto) {
+        this.title = boardRequestDto.getTitle();
+        this.content = boardRequestDto.getContent();
+        this.image = boardRequestDto.getImage();
     }
 }

@@ -21,17 +21,28 @@ public class UserController {
     private final UserService userService;
 
     //유저 생성
-    @PostMapping(value = "/user",  consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity<ApiResponse> save(@RequestPart UserDto userDto, @RequestPart MultipartFile image) {
+    @PostMapping( "/user")
+    public ResponseEntity<ApiResponse> save(@RequestBody UserDto userDto) {
         try {
             log.info("유저 생성 입장!!");
-            Long save = userService.save(userDto, image);
-            ObjectMapper mapper = new ObjectMapper();
-            log.info("bookstore={}", mapper.writeValueAsString(save));
+            Long save = userService.save(userDto);
             return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Created", "유저 생성 성공", save));
         } catch (Exception e) {
             log.error("e={}", e);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponse("NotFound", "유저 생성 실패", null));
+        }
+    }
+
+    //유저 수정
+    @PutMapping("/user/{id}/update")
+    public ResponseEntity<ApiResponse> update(@PathVariable("id") Long userId, @RequestBody UserDto userDto) {
+        try {
+            log.info("유저 업데이트 입장!!");
+            Long update = userService.update(userId, userDto);
+            return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Created", "유저 수정 성공", update));
+        } catch (Exception e) {
+            log.error("e={}", e);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponse("NotFound", "유저 수정 실패", null));
         }
     }
 
@@ -47,5 +58,7 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponse("NotFound", "유저 정보 불러오기 실패", null));
         }
     }
+
+
 
 }

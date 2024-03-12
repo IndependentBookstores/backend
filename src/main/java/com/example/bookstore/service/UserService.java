@@ -19,20 +19,21 @@ import java.util.Optional;
 public class UserService {
 
     private final UserRepository userRepository;
-    private final AmazonS3Service amazonS3Service;
 
-    private final String defaultImage = "https://s3-book.s3.ap-northeast-2.amazonaws.com/%EC%9C%A0%EC%A0%80+%EA%B8%B0%EB%B3%B8.png";
+//    private final String defaultImage = "https://s3-book.s3.ap-northeast-2.amazonaws.com/%EC%9C%A0%EC%A0%80+%EA%B8%B0%EB%B3%B8.png";
 
     //유저 생성
     @Transactional
-    public Long save(UserDto userDto, MultipartFile image) throws IOException {
-        String imageUrl = "";
-        if (image.isEmpty()) {
-            imageUrl = defaultImage;
-        } else {
-            imageUrl = amazonS3Service.upload(image);
-        }
-        return userRepository.save(userDto.toEntity(imageUrl)).getId();
+    public Long save(UserDto userDto){
+        return userRepository.save(userDto.toEntity()).getId();
+    }
+
+    //유저 수정
+    @Transactional
+    public Long update(Long userId, UserDto userDto) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("해당 유저가 없습니다"));
+        user.updateUser(userDto);
+        return userId;
     }
 
     //유저 정보 불러오기
@@ -40,5 +41,6 @@ public class UserService {
         User user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("해당 유저가 없습니다"));
         return new UserDto(user);
     }
+
 
 }
