@@ -64,11 +64,11 @@ public class BoardController {
     }
 
     //선택한 글 조회
-    @GetMapping("/board/{id}")
-    public ResponseEntity<ApiResponse> findById(@PathVariable Long id) {
+    @GetMapping("/board/{boardId}/{userId}")
+    public ResponseEntity<ApiResponse> findById(@PathVariable Long boardId, @PathVariable Long userId) {
         log.info("선택한 글 조회 입장!!");
         try {
-            BoardResponseDto board = boardService.findById(id);
+            BoardDetailDto board = boardService.findById(boardId, userId);
             return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Created", "선택한 글 조회 성공", board));
         } catch (Exception e) {
             log.error("e={}", e);

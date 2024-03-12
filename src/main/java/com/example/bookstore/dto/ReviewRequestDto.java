@@ -14,7 +14,7 @@ public class ReviewRequestDto {
 
     private String content;
 
-//    private String image;
+    private String image;
 
     private Long userId;
 
@@ -26,6 +26,7 @@ public class ReviewRequestDto {
 
         return Review.builder()
                 .content(content)
+                .image(image)
                 .user(user)
                 .bookStore(bookStore)
                 .build();

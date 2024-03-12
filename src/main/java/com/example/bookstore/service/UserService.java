@@ -1,5 +1,6 @@
 package com.example.bookstore.service;
 
+import com.amazonaws.services.kms.model.NotFoundException;
 import com.example.bookstore.domain.User;
 import com.example.bookstore.dto.UserDto;
 import com.example.bookstore.repository.UserRepository;
@@ -31,14 +32,14 @@ public class UserService {
     //유저 수정
     @Transactional
     public Long update(Long userId, UserDto userDto) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("해당 유저가 없습니다"));
+        User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("해당 유저가 없습니다"));
         user.updateUser(userDto);
         return userId;
     }
 
     //유저 정보 불러오기
     public UserDto findUser(Long userId){
-        User user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("해당 유저가 없습니다"));
+        User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("해당 유저가 없습니다"));
         return new UserDto(user);
     }
 

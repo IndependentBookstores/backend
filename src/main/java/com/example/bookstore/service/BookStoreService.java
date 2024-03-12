@@ -1,5 +1,6 @@
 package com.example.bookstore.service;
 
+import com.amazonaws.services.kms.model.NotFoundException;
 import com.example.bookstore.domain.Blog;
 import com.example.bookstore.domain.BookStore;
 import com.example.bookstore.domain.Review;
@@ -35,7 +36,7 @@ public class BookStoreService {
 
     //서점 상세정보
     public BookStoreDetailDto getBookStore(Long bookStoreId) {
-        BookStore bookStore = bookStoreRepository.findById(bookStoreId).orElseThrow(()->new IllegalArgumentException("해당 서점이 없습니다."));
+        BookStore bookStore = bookStoreRepository.findById(bookStoreId).orElseThrow(()->new NotFoundException("해당 서점이 없습니다."));
         return new BookStoreDetailDto(bookStore);
     }
 
@@ -68,10 +69,5 @@ public class BookStoreService {
         return regionBookStore.stream().map(BookStoreResponseDto::new).collect(Collectors.toList());
     }
 
-    //전체 서점 리스트
-//    public List<BookStoreResponseDto> getBookStoreList() {
-//        List<BookStore> bookStoreList = bookStoreRepository.findAll();
-//        return bookStoreList.stream().map(BookStoreResponseDto::new).collect(Collectors.toList());
-//    }
 
 }
