@@ -29,9 +29,6 @@ import java.util.stream.Collectors;
 public class BookStoreService {
 
     private final BookStoreRepository bookStoreRepository;
-    private final BlogRepository blogRepository;
-
-    private final ReviewRepository reviewRepository;
 
 
     //서점 상세정보

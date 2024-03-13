@@ -26,4 +26,6 @@ public class Heart {
         this.user = user;
         this.board = board;
     }
+
+
 }

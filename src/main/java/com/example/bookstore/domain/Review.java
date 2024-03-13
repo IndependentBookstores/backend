@@ -32,4 +32,9 @@ public class Review extends BaseTimeEntity {
         this.user = user;
         this.bookStore = bookStore;
     }
+
+    //유저 삭제 시 리뷰 유저 정보 변경
+    public void deleteUser() {
+        this.user = null;
+    }
 }

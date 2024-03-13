@@ -10,4 +10,6 @@ import java.util.List;
 
 public interface ReplyRepository extends JpaRepository<Reply, Long> {
     List<Reply> findAllByBoardId(Long boardId);
+
+    List<Reply> findAllByUserId(Long userId);
 }

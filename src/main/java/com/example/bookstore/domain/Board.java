@@ -34,11 +34,17 @@ public class Board extends BaseTimeEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Reply> replies = new ArrayList<>();
 
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
     private List<Heart> hearts = new ArrayList<>();
+
+    public Board(String title, String content, User user) {
+        this.title = title;
+        this.content = content;
+        this.user = user;
+    }
 
     @Builder
     public Board(Long id, String title, String content, String image, int likeCount, int replyCount, User user) {
@@ -56,5 +62,10 @@ public class Board extends BaseTimeEntity {
         this.title = boardRequestDto.getTitle();
         this.content = boardRequestDto.getContent();
         this.image = boardRequestDto.getImage();
+    }
+
+    //유저 삭제 시 글 유저 정보 변경
+    public void deleteUser() {
+        this.user = null;
     }
 }

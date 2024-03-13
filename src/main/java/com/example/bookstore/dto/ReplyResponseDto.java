@@ -26,12 +26,24 @@ public class ReplyResponseDto {
 
     private Long userId;
 
+    private String profile_image;
+
+    private String nickname;
+
     public ReplyResponseDto(Reply reply) {
         this.id = reply.getId();
         this.content = reply.getContent();
         this.createdDate = reply.getCreatedDate();
         this.modifiedDate = reply.getModifiedDate();
         this.boardId = reply.getBoard().getId();
-        this.userId = reply.getUser().getId();
+        if (reply.getUser() != null) {
+            this.userId = reply.getUser().getId();
+            this.nickname = reply.getUser().getNickname();
+            this.profile_image = reply.getUser().getProfileImage();
+        } else {
+            this.userId = null;
+            this.nickname = "익명";
+            this.profile_image = null;
+        }
     }
 }

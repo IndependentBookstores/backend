@@ -46,6 +46,24 @@ public class UserController {
         }
     }
 
+    //닉네임 중복확인
+    @GetMapping("/user/check")
+    public ResponseEntity<ApiResponse> checkNickname(@RequestParam String nickname) {
+        try {
+            log.info("닉네임 중복확인 입장!!");
+            Boolean checkNickname = userService.checkNickname(nickname);
+            if (checkNickname == true) {
+                //닉네임 중복이 있어서 만들 수 없을 때 true 리턴
+                return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Created", "닉네임 중복있음", checkNickname));
+            }
+            //닉네임 중복이 없어서 만들 수 있을 때 false 리턴
+            return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Created", "닉네임 중복없음", checkNickname));
+        } catch (Exception e) {
+            log.error("e={}", e);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponse("Created", "닉네임 중복확인 실패", null));
+        }
+    }
+
     //유저 정보 불러오기
     @GetMapping("/user/{id}")
     public ResponseEntity<ApiResponse> save(@PathVariable Long id) {
@@ -56,6 +74,19 @@ public class UserController {
         } catch (Exception e) {
             log.error("e={}", e);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponse("NotFound", "유저 정보 불러오기 실패", null));
+        }
+    }
+
+    //유저 삭제
+    @DeleteMapping("/user/{id}")
+    public ResponseEntity<ApiResponse> delete(@PathVariable Long id) {
+        try {
+            log.info("유저 삭제하기 입장!!");
+            userService.delete(id);
+            return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Created", "유저 정보 삭제하기 성공", id));
+        } catch (Exception e) {
+            log.error("e={}", e);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponse("NotFound", "유저 정보 삭제하기 실패", null));
         }
     }
 

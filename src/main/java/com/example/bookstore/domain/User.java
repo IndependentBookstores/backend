@@ -24,17 +24,23 @@ public class User {
 
     private String profileImage;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user")
     private List<Board> boards = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user")
     private List<Reply> replies = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user")
     private List<Heart> hearts = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user")
     private List<Review> reviews = new ArrayList<>();
+
+    public User(Long id, String nickname, int age) {
+        this.id = id;
+        this.nickname = nickname;
+        this.age = age;
+    }
 
     @Builder
     public User(Long id, String nickname, int age, String category, String profileImage) {

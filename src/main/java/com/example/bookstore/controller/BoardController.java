@@ -50,12 +50,25 @@ public class BoardController {
         }
     }
 
+    //글 삭제
+    @DeleteMapping("/board/{id}/delete")
+    public ResponseEntity<ApiResponse> save(@PathVariable("id") Long boardId) {
+        log.info("글 삭제 입장!!");
+        try {
+            boardService.delete(boardId);
+            return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Created", "글 삭제 성공", true));
+        } catch (Exception e) {
+            log.error("e={}", e);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponse("NotFound", "글 삭제 실패", false));
+        }
+    }
+
     //글 전체 조회
-    @GetMapping("/board/all")
-    public ResponseEntity<ApiResponse> findAll() {
+    @GetMapping("/board/all/{userId}")
+    public ResponseEntity<ApiResponse> findAll(@PathVariable Long userId) {
         log.info("글 전체 조회 입장!!");
         try {
-            List<BoardResponseDto> boards = boardService.findAll();
+            List<BoardResponseDto> boards = boardService.findAll(userId);
             return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Created", "글 전체 조회 성공", boards));
         } catch (Exception e) {
             log.error("e={}", e);
@@ -68,7 +81,7 @@ public class BoardController {
     public ResponseEntity<ApiResponse> findById(@PathVariable Long boardId, @PathVariable Long userId) {
         log.info("선택한 글 조회 입장!!");
         try {
-            BoardDetailDto board = boardService.findById(boardId, userId);
+            BoardResponseDto board = boardService.findById(boardId, userId);
             return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Created", "선택한 글 조회 성공", board));
         } catch (Exception e) {
             log.error("e={}", e);

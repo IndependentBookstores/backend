@@ -32,40 +32,57 @@ import java.util.stream.Collectors;
 public class BoardService {
 
     private final BoardRepository boardRepository;
-
     private final HeartRepository heartRepository;
-
     private final UserRepository userRepository;
 
     //글 생성
     @Transactional
-    public Long save(BoardRequestDto boardRequestDto){
+    public Long save(BoardRequestDto boardRequestDto) {
         return boardRepository.save(boardRequestDto.toEntity()).getId();
     }
 
     //글 수정
     @Transactional
-    public Long update(Long boardId, BoardRequestDto boardRequestDto){
+    public Long update(Long boardId, BoardRequestDto boardRequestDto) {
         Board board = boardRepository.findById(boardId).orElseThrow(() -> new NotFoundException("글이 존재하지 않습니다."));
         board.updateBoard(boardRequestDto);
         return boardId;
     }
 
+    //글 삭제
+    @Transactional
+    public void delete(Long boardId) {
+        boardRepository.deleteById(boardId);
+    }
+
+
     //글 전체 조회
-    public List<BoardResponseDto> findAll() {
-        List<Board> boards = boardRepository.findAll();
-        return boards.stream().map(BoardResponseDto::new).collect(Collectors.toList());
+    public List<BoardResponseDto> findAll(Long userId) {
+        List<BoardResponseDto> boards = boardRepository.findAll()
+                .stream().map(BoardResponseDto::new).collect(Collectors.toList());
+        List<Long> heartBoardIds = heartRepository.findAllByUserId(userId)
+                .stream().map(heart -> new HeartResponseDto(heart).getBoardId()).collect(Collectors.toList());
+
+        for (BoardResponseDto board : boards) {
+            if (heartBoardIds.contains(board.getId())) {
+                board.setIsLike(true);
+            } else {
+                board.setIsLike(false);
+            }
+        }
+
+        return boards;
     }
 
     //선택한 글 조회
-    public BoardDetailDto findById(Long boardId, Long userId) {
+    public BoardResponseDto findById(Long boardId, Long userId) {
         Board board = boardRepository.findById(boardId).orElseThrow(() -> new NotFoundException("해당 글이 없습니다"));
         User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("유저를 찾을 수 없습니다."));
         Optional<Heart> heart = heartRepository.findByUserAndBoard(user, board);
         if (heart.isPresent()) {
-            return new BoardDetailDto(board, true);
+            return new BoardResponseDto(board, true);
         } else {
-            return new BoardDetailDto(board, false);
+            return new BoardResponseDto(board, false);
         }
     }
 

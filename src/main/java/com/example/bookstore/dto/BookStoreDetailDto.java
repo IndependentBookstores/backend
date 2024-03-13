@@ -57,30 +57,5 @@ public class BookStoreDetailDto {
         this.instagramId = bookStore.getInstagramId();
         this.instagramLink = bookStore.getInstagramLink();
 
-//        for (int i = 0; i < blogs.size(); i++) {
-//            Blog blog = blogs.get(i);
-//            BlogDto blogDto = new BlogDto();
-//
-//            blogDto.setTitle(blog.getTitle());
-//            blogDto.setContent(blog.getContent());
-//            blogDto.setLink(blog.getLink());
-//            blogDto.setAuthor(blog.getAuthor());
-//            blogDto.setName(blog.getName());
-//            blogDto.setDate(blog.getDate());
-//
-//            blogDtos.add(blogDto);
-//        }
-//
-//        for (int i = 0; i < reviews.size(); i++) {
-//            Review review = reviews.get(i);
-//            ReviewDto reviewDto = new ReviewDto();
-//
-//            reviewDto.setContent(review.getContent());
-//            reviewDto.setProfile_image(review.getUser().getProfileImage());
-//            reviewDto.setNickname(review.getUser().getNickname());
-//
-//            reviewDtos.add(reviewDto);
-//        }
-//
     }
 }

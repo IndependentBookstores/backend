@@ -16,20 +16,32 @@ public class ReviewResponseDto {
     private Long id;
     private String content;
 
-    private String profile_image;
-
+    private String image;
     private String createdDate;
 
     private String modifiedDate;
 
+    private Long userId;
+
     private String nickname;
+
+    private String profile_image;
+
 
     public ReviewResponseDto(Review review) {
         this.id = review.getId();
         this.content = review.getContent();
-        this.profile_image = review.getUser().getProfileImage();
+        this.image = review.getImage();
         this.createdDate = review.getCreatedDate();
         this.modifiedDate = review.getModifiedDate();
-        this.nickname = review.getUser().getNickname();
+        if (review.getUser() != null) {
+            this.userId = review.getUser().getId();
+            this.nickname = review.getUser().getNickname();
+            this.profile_image = review.getUser().getProfileImage();
+        } else {
+            this.userId = null;
+            this.nickname = "익명";
+            this.profile_image = null;
+        }
     }
 }

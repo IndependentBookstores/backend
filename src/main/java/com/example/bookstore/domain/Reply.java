@@ -24,10 +24,17 @@ public class Reply extends BaseTimeEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
+
+
     @Builder
     public Reply(String content, Board board, User user) {
         this.content = content;
         this.board = board;
         this.user = user;
+    }
+
+    //유저 삭제 시 댓글 유저 정보 변경
+    public void deleteUser() {
+        this.user = null;
     }
 }

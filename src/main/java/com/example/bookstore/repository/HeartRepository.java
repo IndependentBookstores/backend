@@ -16,6 +16,6 @@ public interface HeartRepository extends JpaRepository<Heart, Long> {
 
     @Query("select h from Heart h left join fetch h.board where h.user.id = :userId")
     List<Heart> heartBoards(Long userId);
-
+    List<Heart> findAllByUserId(Long userId);
 
 }

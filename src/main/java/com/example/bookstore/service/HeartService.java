@@ -34,7 +34,7 @@ public class HeartService {
         Optional<Heart> likeBoard = heartRepository.findByUserAndBoard(user, board);
 
         if (likeBoard.isPresent()) {
-            boardRepository.subLikeCount(likeBoard.get().getId());
+            boardRepository.subLikeCount(board.getId());
             heartRepository.delete(heartRequestDto.toEntity());
             return false;
         } else {
