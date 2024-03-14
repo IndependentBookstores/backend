@@ -34,6 +34,32 @@ public class ReviewController {
         }
     }
 
+    //리뷰 수정
+    @PutMapping("/review/{id}/update")
+    public ResponseEntity<ApiResponse> update(@PathVariable("id") Long reviewId, @RequestBody ReviewRequestDto reviewRequestDto)  {
+        log.info("리뷰 수정 입장!!");
+        try {
+            Long save = reviewService.update(reviewId, reviewRequestDto);
+            return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Created", "리뷰 수정 성공", save));
+        } catch (Exception e) {
+            log.error("e={}", e);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponse("NotFound", "리뷰 수정 실패", null));
+        }
+    }
+
+    //리뷰 삭제
+    @DeleteMapping("/review/{id}/delete")
+    public ResponseEntity<ApiResponse> delete(@PathVariable("id") Long reviewId)  {
+        log.info("리뷰 삭제 입장!!");
+        try {
+            reviewService.delete(reviewId);
+            return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Created", "리뷰 삭제 성공", true));
+        } catch (Exception e) {
+            log.error("e={}", e);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponse("NotFound", "리뷰 삭제 실패", false));
+        }
+    }
+
     //서점 상세정보에 있는 리뷰 조회
     @GetMapping("/review")
     public ResponseEntity<ApiResponse> getReviews(@RequestParam Long bookStoreId) {

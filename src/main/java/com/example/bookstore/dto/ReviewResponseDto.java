@@ -39,9 +39,9 @@ public class ReviewResponseDto {
             this.nickname = review.getUser().getNickname();
             this.profile_image = review.getUser().getProfileImage();
         } else {
-            this.userId = null;
+            this.userId = 0L;
             this.nickname = "익명";
-            this.profile_image = null;
+            this.profile_image = "https://s3-book.s3.ap-northeast-2.amazonaws.com/%EC%9C%A0%EC%A0%80+%EA%B8%B0%EB%B3%B8.png";
         }
     }
 }

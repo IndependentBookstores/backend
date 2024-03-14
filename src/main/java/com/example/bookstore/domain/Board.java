@@ -34,7 +34,7 @@ public class Board extends BaseTimeEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
     private List<Reply> replies = new ArrayList<>();
 
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)

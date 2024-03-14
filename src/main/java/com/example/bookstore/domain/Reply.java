@@ -1,5 +1,6 @@
 package com.example.bookstore.domain;
 
+import com.example.bookstore.dto.ReplyRequestDto;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -31,6 +32,11 @@ public class Reply extends BaseTimeEntity {
         this.content = content;
         this.board = board;
         this.user = user;
+    }
+
+    //댓글 수정
+    public void updateReply(ReplyRequestDto replyRequestDto) {
+        this.content = replyRequestDto.getContent();
     }
 
     //유저 삭제 시 댓글 유저 정보 변경

@@ -35,6 +35,7 @@ public class BoardResponseDto {
 
     private String profile_image;
 
+    //상세 글
     public BoardResponseDto(Board board, Boolean isLike) {
         this.id = board.getId();
         this.title = board.getTitle();
@@ -50,12 +51,14 @@ public class BoardResponseDto {
             this.nickname = board.getUser().getNickname();
             this.profile_image = board.getUser().getProfileImage();
         } else {
-            this.userId = null;
+            this.userId = 0L;
             this.nickname = "익명";
-            this.profile_image = null;
+            this.profile_image = "https://s3-book.s3.ap-northeast-2.amazonaws.com/%EC%9C%A0%EC%A0%80+%EA%B8%B0%EB%B3%B8.png";
         }
 
     }
+
+    //전체 글
     public BoardResponseDto(Board board) {
         this.id = board.getId();
         this.title = board.getTitle();
@@ -69,7 +72,7 @@ public class BoardResponseDto {
             this.userId = board.getUser().getId();
             this.nickname = board.getUser().getNickname();
         } else {
-            this.userId = null;
+            this.userId = 0L;
             this.nickname = "익명";
         }
 

@@ -21,6 +21,14 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
     @Query("update Board b set b.likeCount= b.likeCount-1 where b.id = :boardId")
     void subLikeCount(Long boardId);
 
+    @Modifying
+    @Query("update Board b set b.replyCount = b.replyCount+1 where b.id = :boardId")
+    void addReplyCount(Long boardId);
+
+    @Modifying
+    @Query("update Board b set b.replyCount = b.replyCount-1 where b.id = :boardId")
+    void subReplyCount(Long boardId);
+
     @Query("select b from Board b where b.modifiedDate >= :oneWeekAgo")
     List<Board> bestBoards(String oneWeekAgo, Pageable pageable);
 

@@ -1,5 +1,6 @@
 package com.example.bookstore.service;
 
+import com.amazonaws.services.kms.model.NotFoundException;
 import com.example.bookstore.domain.Review;
 import com.example.bookstore.dto.ReviewRequestDto;
 import com.example.bookstore.dto.ReviewResponseDto;
@@ -24,6 +25,20 @@ public class ReviewService {
     @Transactional
     public Long save(ReviewRequestDto reviewRequestDto) {
         return reviewRepository.save(reviewRequestDto.toEntity()).getId();
+    }
+
+    //리뷰 수정
+    @Transactional
+    public Long update(Long reviewId, ReviewRequestDto reviewRequestDto) {
+        Review review = reviewRepository.findById(reviewId).orElseThrow(() -> new NotFoundException("해당 리뷰를 찾을 수 없습니다."));
+        review.updateReview(reviewRequestDto);
+        return reviewId;
+    }
+
+    //리뷰 삭제
+    @Transactional
+    public void delete(Long reviewId) {
+        reviewRepository.deleteById(reviewId);
     }
 
     //서점 상세정보에 있는 리뷰 조회

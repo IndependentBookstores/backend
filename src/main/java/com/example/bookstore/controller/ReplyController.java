@@ -34,6 +34,35 @@ public class ReplyController {
         }
     }
 
+    //댓글 수정
+    @PutMapping("/reply/{id}/update")
+    public ResponseEntity<ApiResponse> update(@PathVariable("id") Long replyId, @RequestBody ReplyRequestDto replyRequestDto) {
+        try {
+            log.info("댓글 수정 입장!!");
+            Long save = replyService.update(replyId, replyRequestDto);
+            return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Created", "댓글 수정 성공", save));
+
+        } catch (Exception e) {
+            log.error("e={}", e);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponse("NotFound", "댓글 수정 실패", null));
+
+        }
+    }
+
+    //댓글 삭제
+    @DeleteMapping("/reply/{id}/delete")
+    public ResponseEntity<ApiResponse> save(@PathVariable("id") Long replyId) {
+        try {
+            log.info("댓글 삭제 입장!!");
+            replyService.delete(replyId);
+            return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Created", "댓글 삭제 성공", true));
+        } catch (Exception e) {
+            log.error("e={}", e);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponse("NotFound", "댓글 삭제 실패", false));
+
+        }
+    }
+
     //글에 해당하는 댓글 조회
     @GetMapping("/reply")
     public ResponseEntity<ApiResponse> findAllByBoardId(@RequestParam Long boardId) {

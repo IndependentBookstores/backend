@@ -1,5 +1,6 @@
 package com.example.bookstore.domain;
 
+import com.example.bookstore.dto.ReviewRequestDto;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -31,6 +32,12 @@ public class Review extends BaseTimeEntity {
         this.image = image;
         this.user = user;
         this.bookStore = bookStore;
+    }
+
+    //리뷰 수정
+    public void updateReview(ReviewRequestDto reviewRequestDto) {
+        this.content = reviewRequestDto.getContent();
+        this.image = reviewRequestDto.getImage();
     }
 
     //유저 삭제 시 리뷰 유저 정보 변경
