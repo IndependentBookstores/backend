@@ -36,6 +36,9 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Review> reviews = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user")
+    private List<BookMark> bookMarks = new ArrayList<>();
+
     public User(Long id, String nickname, int age) {
         this.id = id;
         this.nickname = nickname;

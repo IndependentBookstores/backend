@@ -35,7 +35,6 @@ public class HeartService {
 
         if (likeBoard.isPresent()) {
             boardRepository.subLikeCount(board.getId());
-            heartRepository.delete(heartRequestDto.toEntity());
             return false;
         } else {
             heartRepository.save(heartRequestDto.toEntity());

@@ -54,6 +54,9 @@ public class BookStore {
     @OneToMany(mappedBy = "bookStore")
     private List<Review> reviews = new ArrayList<>();
 
+    @OneToMany(mappedBy = "bookStore")
+    private List<BookMark> bookMarks = new ArrayList<>();
+
     public BookStore(String name) {
         this.name = name;
     }

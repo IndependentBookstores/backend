@@ -32,4 +32,6 @@ public interface BookStoreRepository extends JpaRepository<BookStore, Long> {
 
     @Query("select b from BookStore b where b.address like %:region%")
     List<BookStore> getRegionBookStore(@Param("region") String region);
+
+
 }
